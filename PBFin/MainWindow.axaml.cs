@@ -14,9 +14,7 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
-using LibVLCSharp.Shared;
-using Newtonsoft.Json;
-using Color = System.Drawing.Color;
+using LibVLCSharp.Shared; using Color = System.Drawing.Color;
 
 namespace PBFin;
 
