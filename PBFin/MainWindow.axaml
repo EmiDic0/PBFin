@@ -1,0 +1,315 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:pbFin="clr-namespace:PBFin"
+        mc:Ignorable="d" d:DesignWidth="*" d:DesignHeight="*"
+        x:Class="PBFin.MainWindow"
+        x:DataType="pbFin:MainWindow"
+        Title="PBFin"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        CornerRadius="20"
+        SizeToContent="WidthAndHeight">
+        
+        <Panel>
+                
+                <ExperimentalAcrylicBorder IsHitTestVisible="False">
+                        <ExperimentalAcrylicBorder.Material>
+                                <ExperimentalAcrylicMaterial
+                                        BackgroundSource="Digger"
+                                        TintColor="Black"
+                                        TintOpacity="1"
+                                        MaterialOpacity="0.65" />
+                        </ExperimentalAcrylicBorder.Material>
+                </ExperimentalAcrylicBorder>
+                
+                <Grid
+                        
+                Name="MainCanvas"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+
+
+                <!-- GRID DEFINITION -->
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+
+                </Grid.RowDefinitions>
+                
+                <!-- ELEMENTS -->
+                
+
+                <ScrollViewer
+                        x:Name="SongsScroll"
+                        CornerRadius="20"
+                        Margin="50"
+                        Grid.Row="0"
+                        Grid.RowSpan="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="9"
+                        >
+                        
+                        <StackPanel
+                                x:Name="SongsWindow"
+                                Spacing="10"
+                                Margin="20"
+                                >
+                                <ItemsControl ItemsSource="{Binding ButtonDataList}">
+                                        <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                        <VirtualizingStackPanel />
+                                                </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                        <Border
+                                                                Tag="{Binding Tag}"
+                                                                PointerEntered="SetBorder"
+                                                                PointerExited="UnsetBorder"
+                                                                BorderBrush="DarkTurquoise"
+                                                                BorderThickness="0"
+                                                                CornerRadius="50"
+                                                                >
+                                                                <Grid
+                                                                Background="Transparent"
+                                                                >
+                                                                <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="50"></ColumnDefinition>
+                                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="*"></RowDefinition>
+                                                                </Grid.RowDefinitions>
+                                                                <Button 
+                                                                        CornerRadius="20"
+                                                                        ClipToBounds="True"
+                                                                        Background="Transparent"
+                                                                        Margin="5"
+                                                                        Tag = "{Binding Tag}"
+                                                                        Click="PlayFromlist"
+                                                                        VerticalAlignment="Center"
+                                                                        Grid.Column="0"
+                                                                >
+                                                                        <Button.Content>
+                                                                                <Image Source="avares://PBFin/Assets/playButton.png"/>
+                                                                        </Button.Content>
+                                                                </Button>
+                                                                <TextBlock
+                                                                        ClipToBounds="True"
+                                                                        Margin="5"
+                                                                        VerticalAlignment="Center"
+                                                                        Text = "{Binding ButtonText}"
+                                                                        Grid.Column="1"
+                                                                        >
+                                                                        
+                                                                </TextBlock>
+                                                        </Grid>
+                                                        </Border>
+                                                        
+                                                </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                
+                        </StackPanel>
+                </ScrollViewer>
+                <TextBox 
+                        x:Name="SearchBox"
+                        TextChanged="UpdateSongList"
+                        Grid.Row="0"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Top"
+                         Grid.Column="3"
+                         Grid.ColumnSpan="3"
+                         Background="Transparent"
+                         BorderBrush="White"
+                         BorderThickness="1"
+                         CornerRadius="50"
+                         Height="20"
+                         Margin="20"
+                         Text=""
+                         >
+                        
+                </TextBox>
+                <Button
+                        Grid.Row = "0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="20"
+                        Padding="7"
+                        Background="Transparent"
+                        BorderBrush="White"
+                        BorderThickness="1"
+                        CornerRadius="20"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        x:Name="OpenDirectoryButton"
+                        Content="Choose directory"
+                />
+                <StackPanel Margin="20"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            >
+                        <ComboBox SelectedIndex="0" MaxDropDownHeight="400"
+                                  Background="Transparent"
+                                  CornerRadius="50"
+                                  Margin="20,0,0,0"
+                                  Padding="10"
+                                  Height="20">
+                                <ItemsControl ItemsSource="{Binding DirectoryList}">
+                                        <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                        <!--<ComboBoxItem> -->
+                                                        <Button
+                                                                Content="{Binding DirectoryText}"
+                                                                Tag = "{Binding DirectoryPath}"
+                                                                Click="LoadDirectory"
+                                                                Background="Transparent"
+                                                                />
+                                                        <!--</ComboBoxItem>  -->
+                                                </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                
+                        </ComboBox>
+                </StackPanel>
+                
+                <Button
+                        Grid.Row="5"
+                        Grid.Column="3"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="10, 0, 0, 0"
+                        Background="Transparent"
+                        x:Name="PreviousSong"
+                        Click="OnPrevious"
+                        >
+                        <Button.Content>
+                                <Image Source="avares://PBFin/Assets/backButton.png"
+                                       Width="40"
+                                       Height="40"
+                                       ></Image>
+                        </Button.Content>
+                </Button>
+               <Button
+                       Grid.Row="5"
+                       Grid.Column="5"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="10, 0, 0, 0"
+                       Background="Transparent"
+                       x:Name="NextSong"
+                       Click="OnNext"
+               >
+                       <Button.Content>
+                               <Image Source="avares://PBFin/Assets/forwardButton.png"
+                                      Width="40"
+                                      Height="40"
+                                      ></Image>
+                       </Button.Content>
+               </Button>
+                
+                <Button
+                        x:Name="PauseButton"
+                        Grid.Row="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Grid.Column="4"
+                        Background="Transparent"
+                        Margin="10, 0, 0, 0"
+                        Click="OnPause">
+                        
+                        <Button.Content
+                                >
+                                <Image
+                                        x:Name="PauseButtonImage"
+                                        Height="40"
+                                        Width="40"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        Source="avares://PBFin/Assets/playButton.png"></Image>
+                        </Button.Content>
+                        
+                </Button>
+                <Button
+                        x:Name="ShuffleButton"
+                        Grid.Row="4"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Grid.Column="4"
+                        Margin="10"
+                        Background="Transparent"
+                        Click="OnShuffle">
+                        <Button.Content>
+                                <Image 
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        x:Name="ShuffleButtonImage"
+                                        Width="20"
+                                        Height="20"
+                                        Source="avares://PBFin/Assets/noShuffleButton.png"/>
+                        </Button.Content>
+                </Button>
+                
+                <TextBlock
+                        Grid.Row="5"
+                        Grid.Column="3"
+                        Grid.ColumnSpan="3"
+                        x:Name="PlaybackStatus"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="-" 
+                        TextAlignment="Center"
+                        />
+                <Slider
+                        Margin="20,0,20,10"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Bottom"
+                        Minimum="0"
+                        Maximum="100"
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        
+                        x:Name="VolumeSlider"
+                        ValueChanged="UpdateVolume"
+                        />
+
+               <Slider
+                       Margin="10"
+                       Minimum="0"
+                       Maximum="100"
+                       Grid.Row="5"
+                       Grid.Column="2"
+                       Grid.ColumnSpan="5"
+                       VerticalAlignment="Bottom"
+                       x:Name="ProgressSlider"
+                       ValueChanged="OnTimeStampChanged"
+               />
+        </Grid>
+                
+        </Panel>
+        
+</Window>
