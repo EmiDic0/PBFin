@@ -30,7 +30,7 @@ public partial class MainWindow : Window
     private int _currentSong;
     private bool _isPlaying = false;
     private bool _isShuffling = false;
-    private List<String> SongsInDirectory { get; set; }
+    private List<String> SongsInDirectory { get; set; } = new List<string>();
     private MediaList SongsList { get; set; }
     
     #region Init And Constructor
@@ -41,15 +41,26 @@ public partial class MainWindow : Window
         InitMediaPlayer();
         this.DataContext = this;
 
-        
+
         LoadInitialPersistentData();
+        LoadInitialSettings();
         if (DirectoryList.Count > 0)
         {
             SongsInDirectory = Directory.GetFiles(DirectoryList[0].DirectoryPath).ToList();
             CreateSongList();
         }
     }
-    
+
+    private void LoadInitialSettings()
+    {
+        if (!Directory.Exists("./Settings/"))
+        {
+            VolumeSlider.Value = 50;
+            return;
+        }
+        VolumeSlider.Value = double.Parse(File.ReadAllBytes("./Settings/Volume.txt"));
+    }
+
     private void LoadInitialPersistentData()
     {
         //load directories
@@ -63,14 +74,6 @@ public partial class MainWindow : Window
         {
             DirectoryList.Add(new  DirectoryData {DirectoryText = directory, DirectoryPath = directory});
         }
-        
-        //load volume
-        if (!Directory.Exists("./Settings/"))
-        {
-            VolumeSlider.Value = 50;
-            return;
-        }
-        VolumeSlider.Value = double.Parse(File.ReadAllBytes("./Settings/Volume.txt"));
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -313,7 +316,7 @@ public partial class MainWindow : Window
         ButtonDataList.Clear();
         for (int i = 0 ; i < SongsInDirectory.Count; i++)
         {
-            if (Path.GetFileNameWithoutExtension(SongsInDirectory[i]).Contains(SearchBox.Text))
+            if (Path.GetFileNameWithoutExtension(SongsInDirectory[i]).ToLower().Contains(SearchBox.Text.ToLower()))
             {
                 ButtonDataList.Add(new  ButtonData{ButtonText = Path.GetFileNameWithoutExtension(SongsInDirectory[i]), Tag = i});
             }
