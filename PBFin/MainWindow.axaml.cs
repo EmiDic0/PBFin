@@ -14,7 +14,9 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
-using LibVLCSharp.Shared; using Color = System.Drawing.Color;
+using LibVLCSharp.Shared;
+using Bitmap = Avalonia.Media.Imaging.Bitmap;
+using Color = System.Drawing.Color;
 
 namespace PBFin;
 
