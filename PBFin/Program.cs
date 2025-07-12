@@ -1,8 +1,5 @@
 ﻿using Avalonia;
 using System;
-using Projektanker.Icons.Avalonia;
-using Projektanker.Icons.Avalonia.FontAwesome;
-
 namespace PBFin;
 
 class Program
